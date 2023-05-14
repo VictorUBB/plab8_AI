@@ -4,6 +4,10 @@ from sklearn import neural_network
 import matplotlib.pyplot as plt
 from sklearn import neural_network
 from sklearn import linear_model
+
+from MyNeuralNetwork import MyNeuralNetwork
+
+
 class IrisProblem:
 
     def loadIrisData(self):
@@ -144,7 +148,11 @@ class IrisProblem:
 
         acc, prec, recall, cm = self.evalMultiClass(np.array(testOutputs), predictedLabels, outputNames)
         self.plotConfusionMatrix(cm, outputNames, "iris classification")
-
+        myClassifier= MyNeuralNetwork(hiddenLayers=10)
+        myClassifier.fit(np.array(trainInputs),np.array(trainOutputs))
+        predLabels=classifier.predict(testInputs)
+        acc1, prec1, recall1, cm1 = self.evalMultiClass(np.array(testOutputs), np.array(predLabels), outputNames)
+        self.plotConfusionMatrix(cm1,outputNames,"my classification")
         print('acc: ', acc)
         print('precision: ', prec)
         print('recall: ', recall)
@@ -190,6 +198,8 @@ class IrisProblem:
         self.training(classifier, trainInputsNormalised, trainOutputs)
         predictedLabels = self.classification(classifier, testInputsNormalised)
         acc, prec, recall, cm = self.evalMultiClass(np.array(testOutputs), predictedLabels, outputNames)
+
+
 
         self.plotConfusionMatrix(cm, outputNames, "digit classification")
         print('acc: ', acc)
